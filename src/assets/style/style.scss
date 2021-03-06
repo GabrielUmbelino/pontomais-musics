@@ -1,2 +1,13 @@
 @import '../node_modules/bulma/bulma';
 @import './theme';
+
+form {
+  .field {
+    .control {
+      .select > select {
+        min-width: 200px;
+        max-width: 100%;
+      }
+    }
+  }
+}

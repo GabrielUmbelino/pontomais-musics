@@ -3,7 +3,7 @@
     <li class="steps-segment" :class="{ 'is-active': step === 'personal' }">
       <a href="#" class="has-text-dark">
         <span class="steps-marker">
-          <font-awesome-icon icon="user-alt" />
+          <font-awesome-icon icon="user-circle" />
         </span>
         <div class="steps-content">
           <p class="heading">Informações Pessoais</p>
@@ -54,6 +54,7 @@
   @import '../node_modules/bulma-o-steps';
 
   .steps {
-    padding-top: 40px;
+    max-width: 100%;
+    margin: auto;
   }
 </style>

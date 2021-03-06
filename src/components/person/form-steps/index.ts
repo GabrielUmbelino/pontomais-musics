@@ -1,1 +1,1 @@
-export { default as FormSteops } from './form-steps.vue'
+export { default as FormSteps } from './form-steps.vue'

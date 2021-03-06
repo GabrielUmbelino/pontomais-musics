@@ -1,81 +1,75 @@
 <template>
   <article class="person-register">
-    <section class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">Cadastro de Pessoa</p>
-        <p class="subtitle">Preencha o formulário abaixo.</p>
-      </div>
-    </section>
-    <FormSteops />
-    <form>
-      <person-form
-        :name="v$.form.name"
-        :email="v$.form.email"
-        @onChangeName="v$.form.name.$model = $event"
-        @onChangeEmail="v$.form.email.$model = $event"
-      />
-      <div class="columns">
-        <div class="column">
-          <div class="field is-grouped is-grouped-right">
-            <!-- <p class="control">
-        <a class="button is-light"> Voltar </a>
-      </p> -->
-            <p class="control">
-              <a class="button is-primary"> Próximo </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </form>
+    <FormSteps :step="steps[currentStep].name" />
+    <PersonTypeForm
+      v-show="currentStep === 0"
+      :personType="personType"
+      @onChangePersonType="personType = $event"
+      :currentStep="currentStep"
+      @onChangeStep="onChangeStep"
+    />
+    <IndividualPersonRegister
+      v-show="personType === 'individual'"
+      :cantGoBack="currentStep === 0"
+      :cantGoNext="currentStep === steps.length - 1"
+      :currentStep="currentStep"
+      @onChangeStep="onChangeStep"
+    />
   </article>
 </template>
 <script lang="ts">
-  import useVuelidate from '@vuelidate/core'
-  import { required, email } from '@vuelidate/validators'
-  import { defineComponent, reactive } from 'vue'
-  import { PersonForm } from '../person-form'
-  import { FormSteops } from '../form-steps'
+  import { defineComponent, ref } from 'vue'
+
+  import {
+    FormSteps,
+    PersonTypeForm,
+    IndividualPersonRegister,
+  } from '@/components'
 
   export default defineComponent({
     name: 'person-register',
     components: {
-      PersonForm,
-      FormSteops,
+      FormSteps,
+      PersonTypeForm,
+      IndividualPersonRegister,
     },
     setup() {
-      const state = reactive({
-        form: {
-          name: '',
-          email: '',
+      const steps = ref([
+        {
+          name: 'personal',
+          isValid: false,
         },
-      })
-      const rules = {
-        form: {
-          name: { required },
-          email: { required, email },
+        {
+          name: 'address',
+          isValid: false,
         },
+        {
+          name: 'complete',
+          isValid: false,
+        },
+      ])
+      const currentStep = ref(0)
+      const personType = ref('individual')
+      const onChangeStep = (step: number, isValid: boolean) => {
+        const newSteps = [...steps.value]
+        newSteps[currentStep.value] = {
+          ...steps.value[currentStep.value],
+          isValid,
+        }
+        steps.value = newSteps
+        currentStep.value = step
       }
 
-      const v$ = useVuelidate(rules, state)
-
-      return { v$ }
+      return { personType, steps, currentStep, onChangeStep }
     },
   })
 </script>
 <style lang="scss">
   .person-register {
-    .hero {
-      .hero-body {
-        width: $form-width;
-        max-width: 100%;
-        margin: auto;
-        padding: 30px 0px;
-      }
-    }
-    form {
+    .steps {
       width: $form-width;
       max-width: 100%;
-      margin: 40px auto 10px;
+      padding-top: 40px;
     }
   }
 </style>

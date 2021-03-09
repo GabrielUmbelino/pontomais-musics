@@ -1,9 +1,6 @@
 <template>
   <div class="person-list">
-    <progress v-if="loading" class="progress is-small is-primary" max="100">
-      15%
-    </progress>
-    <table v-else class="table">
+    <table class="table">
       <thead>
         <tr>
           <th>Nome</th>
@@ -50,6 +47,9 @@
         </tr>
       </tbody>
     </table>
+    <progress v-if="loading" class="progress is-small is-primary" max="100">
+      15%
+    </progress>
   </div>
 </template>
 <script lang="ts">
@@ -92,11 +92,15 @@
   .person-list {
     width: 960px;
     max-width: 100%;
-    margin: 40px auto;
+    margin: 40px auto 10px;
 
     .table,
     .progress {
       width: 100%;
+    }
+    progress.progres {
+      margin: 10px;
+      width: auto;
     }
   }
   @media (max-width: 768px) {

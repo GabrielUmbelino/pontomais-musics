@@ -1,5 +1,6 @@
 <template>
   <article class="person-register">
+    <ErrorMessage :errorMessage="errorMessage" @onClose="onCloseError" />
     <FormSteps :step="steps[currentStep].name" />
     <PersonTypeForm
       v-show="currentStep === 0"
@@ -9,7 +10,7 @@
       @onChangeStep="onChangeStep"
     />
     <IndividualPersonRegister
-      v-show="personType === 'individual'"
+      v-if="personType === 'individual'"
       :isFirstStep="currentStep === 0"
       :isLastStep="currentStep === steps.length - 1"
       :currentStep="currentStep"
@@ -18,7 +19,7 @@
       @onSubmit="onSubmitIndividualPerson"
     />
     <EntityPersonRegister
-      v-show="personType === 'entity'"
+      v-if="personType === 'entity'"
       :isFirstStep="currentStep === 0"
       :isLastStep="currentStep === steps.length - 1"
       :currentStep="currentStep"
@@ -38,13 +39,15 @@
   import { PersonTypeForm } from '../person-type-form'
   import { EntityPersonRegister } from '../entity-person-register'
   import { IndividualPersonRegister } from '../individual-person-register'
+  import { ErrorMessage } from '@/components/error-message'
 
   export default defineComponent({
     components: {
       FormSteps,
+      ErrorMessage,
       PersonTypeForm,
-      IndividualPersonRegister,
       EntityPersonRegister,
+      IndividualPersonRegister,
     },
     setup() {
       const store = useStore()
@@ -57,6 +60,7 @@
         },
       ])
       const currentStep = ref(0)
+      const errorMessage = ref('')
       const personType = ref(store.getters.person.type || 'individual')
       const loading = ref(false)
 
@@ -82,7 +86,7 @@
           router.push('/')
         } catch (error) {
           loading.value = false
-          console.log('Saving Individual person error: ', error)
+          errorMessage.value = 'Ocorreu um erro ao salvar'
         }
       }
 
@@ -100,8 +104,12 @@
           router.push('/')
         } catch (error) {
           loading.value = false
-          console.log('Saving entity   person error: ', error)
+          errorMessage.value = 'Ocorreu um erro ao salvar'
         }
+      }
+
+      const onCloseError = () => {
+        errorMessage.value = ''
       }
 
       return {
@@ -110,6 +118,8 @@
         personType,
         currentStep,
         onChangeStep,
+        errorMessage,
+        onCloseError,
         onSubmitEntityPerson,
         onSubmitIndividualPerson,
       }

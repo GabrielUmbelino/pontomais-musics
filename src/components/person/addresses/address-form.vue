@@ -95,7 +95,7 @@
               :class="{
                 'is-danger': v$.address.neighborhood.$error,
               }"
-              placeholder="Endereço"
+              placeholder="Bairro"
               v-model="state.address.neighborhood"
               @blur="v$.address.neighborhood.$touch()"
             />

@@ -6,6 +6,7 @@
       </div>
     </section>
     <div class="container is-max-desktop person-list">
+      <ErrorMessage :errorMessage="errorMessage" @onClose="onCloseError" />
       <PersonList
         :loading="loading"
         :personList="personList"
@@ -28,10 +29,13 @@
   import { defineComponent, ref } from 'vue'
   import { PersonList } from '../../components/home/person-list/'
   import { Pagination } from '../../components/home/pagination/'
+  import { ErrorMessage } from '../../components/error-message'
+
   export default defineComponent({
     components: {
       PersonList,
       Pagination,
+      ErrorMessage,
     },
     created() {
       this.fetchPersonList()
@@ -41,6 +45,7 @@
       const currentPage = ref(1)
       const skip = ref(0)
       const limit = ref(10)
+      const errorMessage = ref('')
       const personListLength = ref(0)
       const personList = ref<Person[]>()
 
@@ -52,7 +57,7 @@
           loading.value = false
         } catch (error) {
           loading.value = false
-          console.log(error)
+          errorMessage.value = 'Ocorreu um ao carregar pessoas'
         }
       }
 
@@ -63,7 +68,7 @@
           fetchPersonList(skip.value, limit.value)
         } catch (error) {
           loading.value = false
-          console.log(error)
+          errorMessage.value = 'Ocorreu um erro remover pessoa'
         }
       }
 
@@ -74,11 +79,17 @@
         fetchPersonList(skip.value, limit.value)
       }
 
+      const onCloseError = () => {
+        errorMessage.value = ''
+      }
+
       return {
         loading,
         onRemove,
         personList,
         currentPage,
+        errorMessage,
+        onCloseError,
         fetchPersonList,
         personListLength,
         onChangePagination,
@@ -88,7 +99,7 @@
 </script>
 <style lang="scss">
   .container {
-    padding: 0 40px;
+    padding: 20px 40px;
   }
   @media (max-width: 768px) {
     .container {

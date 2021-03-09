@@ -32,12 +32,12 @@
     </div>
     <div class="columns">
       <div class="column is-12">
-        <div
+        <ErrorMessage
           v-if="v$.addresses.$dirty && !state.addresses.length"
-          class="notification is-danger"
-        >
-          Adicione um endereço.
-        </div>
+          :showClose="false"
+          :errorMessage="'Adicione um endereço.'"
+        />
+
         <StepsNavigation
           :isFirstStep="isFirstStep"
           :isLastStep="isLastStep"
@@ -58,10 +58,12 @@
   import useVuelidate from '@vuelidate/core'
   import { Address } from '@/models'
   import { required } from '@vuelidate/validators'
+  import ErrorMessage from '../../error-message/error-message.vue'
 
   export default defineComponent({
     components: {
       AddressForm,
+      ErrorMessage,
       StepsNavigation,
     },
     props: {

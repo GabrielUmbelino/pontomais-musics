@@ -14,7 +14,7 @@
       />
 
       <Pagination
-        v-if="personListLength || currentPage"
+        v-if="personListLength && currentPage"
         :length="personListLength"
         :current="currentPage"
         @onChange="onChangePagination"
@@ -41,10 +41,10 @@
       this.fetchPersonList()
     },
     setup() {
-      const loading = ref(false)
-      const currentPage = ref(1)
       const skip = ref(0)
       const limit = ref(10)
+      const loading = ref(false)
+      const currentPage = ref(1)
       const errorMessage = ref('')
       const personListLength = ref(0)
       const personList = ref<Person[]>()

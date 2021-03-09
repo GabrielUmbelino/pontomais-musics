@@ -1,7 +1,16 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'https://viacep.com.br/ws/';
+const baseURL = 'https://viacep.com.br/ws/';
 
+function createInstance(baseURL: string) {
+  return axios.create({
+    baseURL,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
 
+const axiosInstance = createInstance(baseURL)
 export const getAddress = (zipcode: String) => {
-  return axios.get(`${zipcode}/json/`)
+  return axiosInstance.get(`${zipcode}/json/`)
 }

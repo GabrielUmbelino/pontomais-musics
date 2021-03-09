@@ -1,5 +1,5 @@
 <template>
-  <nav class="pagination">
+  <nav class="pagination is-small">
     <button
       class="button pagination-previous"
       :disabled="isFirst"
@@ -86,7 +86,6 @@
   })
 </script>
 <style lang="scss">
-  $pagination-color: $primary;
   .pagination {
     .pagination-list {
       .pagination-link.is-current {
@@ -96,8 +95,10 @@
     }
   }
   @media (max-width: 768px) {
-    .pagination-list {
-      display: none;
+    .pagination {
+      .pagination-list {
+        display: none;
+      }
     }
   }
 </style>

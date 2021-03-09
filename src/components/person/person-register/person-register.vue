@@ -10,57 +10,109 @@
     />
     <IndividualPersonRegister
       v-show="personType === 'individual'"
-      :cantGoBack="currentStep === 0"
-      :cantGoNext="currentStep === steps.length - 1"
+      :isFirstStep="currentStep === 0"
+      :isLastStep="currentStep === steps.length - 1"
       :currentStep="currentStep"
+      :loading="loading"
       @onChangeStep="onChangeStep"
+      @onSubmit="onSubmitIndividualPerson"
+    />
+    <EntityPersonRegister
+      v-show="personType === 'entity'"
+      :isFirstStep="currentStep === 0"
+      :isLastStep="currentStep === steps.length - 1"
+      :currentStep="currentStep"
+      :loading="loading"
+      @onChangeStep="onChangeStep"
+      @onSubmit="onSubmitEntityPerson"
     />
   </article>
 </template>
 <script lang="ts">
+  import { useStore } from 'vuex'
+  import { router } from '@/router'
+  import { Person } from '@/models'
+  import { FormSteps } from '../form-steps'
+  import { personService } from '@/services'
   import { defineComponent, ref } from 'vue'
-
-  import {
-    FormSteps,
-    PersonTypeForm,
-    IndividualPersonRegister,
-  } from '@/components'
+  import { PersonTypeForm } from '../person-type-form'
+  import { EntityPersonRegister } from '../entity-person-register'
+  import { IndividualPersonRegister } from '../individual-person-register'
 
   export default defineComponent({
-    name: 'person-register',
     components: {
       FormSteps,
       PersonTypeForm,
       IndividualPersonRegister,
+      EntityPersonRegister,
     },
     setup() {
+      const store = useStore()
       const steps = ref([
         {
           name: 'personal',
-          isValid: false,
         },
         {
           name: 'address',
-          isValid: false,
-        },
-        {
-          name: 'complete',
-          isValid: false,
         },
       ])
       const currentStep = ref(0)
-      const personType = ref('individual')
-      const onChangeStep = (step: number, isValid: boolean) => {
-        const newSteps = [...steps.value]
-        newSteps[currentStep.value] = {
-          ...steps.value[currentStep.value],
-          isValid,
+      const personType = ref(store.getters.person.type || 'individual')
+      const loading = ref(false)
+
+      const onChangeStep = (step: number) => {
+        if (step < 0) {
+          router.push('/')
+        } else {
+          currentStep.value = step
         }
-        steps.value = newSteps
-        currentStep.value = step
       }
 
-      return { personType, steps, currentStep, onChangeStep }
+      const onSubmitIndividualPerson = async (person: Person) => {
+        try {
+          loading.value = true
+
+          if (!person._id) {
+            await personService.create({ ...person, type: personType.value })
+          } else {
+            await personService.update({ ...person, type: personType.value })
+          }
+
+          loading.value = false
+          router.push('/')
+        } catch (error) {
+          loading.value = false
+          console.log('Saving Individual person error: ', error)
+        }
+      }
+
+      const onSubmitEntityPerson = async (person: Person) => {
+        try {
+          loading.value = true
+
+          if (!person._id) {
+            await personService.create({ ...person, type: personType.value })
+          } else {
+            await personService.update({ ...person, type: personType.value })
+          }
+
+          loading.value = false
+          router.push('/')
+        } catch (error) {
+          loading.value = false
+          console.log('Saving entity   person error: ', error)
+        }
+      }
+
+      return {
+        steps,
+        loading,
+        personType,
+        currentStep,
+        onChangeStep,
+        onSubmitEntityPerson,
+        onSubmitIndividualPerson,
+      }
     },
   })
 </script>
@@ -69,7 +121,7 @@
     .steps {
       width: $form-width;
       max-width: 100%;
-      padding-top: 40px;
+      padding: 40px 10px 0 15px;
     }
   }
 </style>

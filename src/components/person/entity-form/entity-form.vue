@@ -1,24 +1,24 @@
 <template>
-  <div class="individual-form">
+  <div class="entity-form">
     <div class="columns">
       <div class="column">
         <div class="field">
-          <label class="label">CPF *</label>
+          <label class="label">CNPJ *</label>
           <div class="control">
             <input
               class="input"
               type="tel"
-              :class="{ 'is-danger': v$.individual.cpf.$error }"
-              v-mask="'###.###.###-##'"
-              placeholder="CPF"
-              v-model="state.individual.cpf"
-              @blur="v$.individual.cpf.$touch()"
+              :class="{ 'is-danger': v$.entity.cnpj.$error }"
+              v-mask="'##.###.###/####-##'"
+              placeholder="CNPJ"
+              v-model="state.entity.cnpj"
+              @blur="v$.entity.cnpj.$touch()"
               @change="onChange"
             />
 
             <p
               class="help is-danger"
-              v-for="error of v$.individual.cpf.$errors"
+              v-for="error of v$.entity.cnpj.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -30,46 +30,20 @@
     <div class="columns">
       <div class="column">
         <div class="field">
-          <label class="label">Sexo *</label>
-          <div class="control">
-            <div class="select">
-              <select
-                :class="{ 'is-danger': v$.individual.gender.$error }"
-                v-model="state.individual.gender"
-                @blur="v$.individual.gender.$touch()"
-                @change="onChange"
-              >
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-              </select>
-            </div>
-            <p
-              class="help is-danger"
-              v-for="error of v$.individual.gender.$errors"
-              :key="error.id"
-            >
-              {{ error.$message }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Data de Nascimento *</label>
+          <label class="label">Razão Social *</label>
           <div class="control">
             <input
               class="input"
-              :class="{ 'is-danger': v$.individual.birthDate.$error }"
-              type="tel"
-              v-mask="'##/##/####'"
-              placeholder="Data de Nascimento"
-              v-model="state.individual.birthDate"
-              @blur="v$.individual.birthDate.$touch()"
+              :class="{ 'is-danger': v$.entity.companyName.$error }"
+              type="text"
+              placeholder="Razão Social"
+              v-model="state.entity.companyName"
+              @blur="v$.entity.companyName.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.birthDate.$errors"
+              v-for="error of v$.entity.companyName.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -85,16 +59,16 @@
           <div class="control">
             <input
               class="input"
-              :class="{ 'is-danger': v$.individual.name.$error }"
+              :class="{ 'is-danger': v$.entity.name.$error }"
               type="text"
               placeholder="Nome"
-              v-model="state.individual.name"
-              @blur="v$.individual.name.$touch()"
+              v-model="state.entity.name"
+              @blur="v$.entity.name.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.name.$errors"
+              v-for="error of v$.entity.name.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -110,16 +84,16 @@
           <div class="control">
             <input
               class="input"
-              :class="{ 'is-danger': v$.individual.email.$error }"
+              :class="{ 'is-danger': v$.entity.email.$error }"
               type="text"
               placeholder="Email"
-              v-model="state.individual.email"
-              @blur="v$.individual.email.$touch()"
+              v-model="state.entity.email"
+              @blur="v$.entity.email.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.email.$errors"
+              v-for="error of v$.entity.email.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -136,16 +110,16 @@
             <input
               class="input"
               type="tel"
-              :class="{ 'is-danger': v$.individual.phoneNumber.$error }"
+              :class="{ 'is-danger': v$.entity.phoneNumber.$error }"
               v-mask="['(##) ####-####', '(##) #####-####']"
               placeholder="Telefone"
-              v-model="state.individual.phoneNumber"
-              @blur="v$.individual.phoneNumber.$touch()"
+              v-model="state.entity.phoneNumber"
+              @blur="v$.entity.phoneNumber.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.phoneNumber.$errors"
+              v-for="error of v$.entity.phoneNumber.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -160,16 +134,16 @@
             <input
               class="input"
               type="tel"
-              :class="{ 'is-danger': v$.individual.mobilePhoneNumber.$error }"
+              :class="{ 'is-danger': v$.entity.mobilePhoneNumber.$error }"
               v-mask="['(##) ####-####', '(##) #####-####']"
               placeholder="Celular"
-              v-model="state.individual.mobilePhoneNumber"
-              @blur="v$.individual.mobilePhoneNumber.$touch()"
+              v-model="state.entity.mobilePhoneNumber"
+              @blur="v$.entity.mobilePhoneNumber.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.mobilePhoneNumber.$errors"
+              v-for="error of v$.entity.mobilePhoneNumber.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -185,16 +159,16 @@
           <div class="control">
             <input
               class="input"
-              :class="{ 'is-danger': v$.individual.photoUrl.$error }"
+              :class="{ 'is-danger': v$.entity.photoUrl.$error }"
               type="text"
               placeholder="Foto (url)"
-              v-model="state.individual.photoUrl"
-              @blur="v$.individual.photoUrl.$touch()"
+              v-model="state.entity.photoUrl"
+              @blur="v$.entity.photoUrl.$touch()"
               @change="onChange"
             />
             <p
               class="help is-danger"
-              v-for="error of v$.individual.photoUrl.$errors"
+              v-for="error of v$.entity.photoUrl.$errors"
               :key="error.id"
             >
               {{ error.$message }}
@@ -229,7 +203,6 @@
     url,
   } from '@vuelidate/validators'
   import { useStore } from 'vuex'
-  import moment from 'moment'
 
   export default defineComponent({
     directives: { mask },
@@ -246,14 +219,23 @@
       const store = useStore()
 
       const state = reactive({
-        individual: store.getters.person,
+        entity: store.getters.person,
       })
-
       const rules = {
-        individual: {
+        entity: {
           name: {
             required: helpers.withMessage('Nome é obrigatório.', required),
             minLength: helpers.withMessage('Nome é muito curto.', minLength(2)),
+          },
+          companyName: {
+            required: helpers.withMessage(
+              'Razão Social é obrigatório.',
+              required
+            ),
+            minLength: helpers.withMessage(
+              'Razão Social é muito curto.',
+              minLength(2)
+            ),
           },
           email: {
             email: helpers.withMessage('E-mail inválido.', email),
@@ -267,23 +249,14 @@
           photoUrl: {
             url: helpers.withMessage('Url de foto inválida.', url),
           },
-          cpf: {
-            required: helpers.withMessage('CPF é obrigatório.', required),
-            minLength: helpers.withMessage('CPF incorreto.', minLength(13)),
-          },
-          gender: {
-            required: helpers.withMessage('Sexo é obrigatório.', required),
-          },
-          birthDate: {
-            required: helpers.withMessage(
-              'Data de nascimento é obrigatório.',
-              required
-            ),
+          cnpj: {
+            required: helpers.withMessage('CNPJ é obrigatório.', required),
+            minLength: helpers.withMessage('CNPJ incorreto.', minLength(13)),
           },
         },
       }
       const onChange = () => {
-        emit('onChange', state.individual)
+        emit('onChange', state.entity)
       }
       const v$ = useVuelidate(rules, state)
 
@@ -297,7 +270,7 @@
           return
         }
 
-        store.commit('setIndividual', state.individual)
+        store.commit('setIndividual', state.entity)
         emit('onChangeStep', step)
       }
       return {

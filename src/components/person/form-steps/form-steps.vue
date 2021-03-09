@@ -18,15 +18,7 @@
         <font-awesome-icon icon="home" />
       </span>
       <div class="steps-content">
-        <p class="heading">Endereço</p>
-      </div>
-    </li>
-    <li class="steps-segment" :class="{ 'is-active': step === 'confirm' }">
-      <span class="steps-marker is-hollow">
-        <font-awesome-icon icon="check" />
-      </span>
-      <div class="steps-content">
-        <p class="heading">Confirmação</p>
+        <p class="heading">Endereços</p>
       </div>
     </li>
   </ul>

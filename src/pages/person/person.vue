@@ -1,12 +1,14 @@
 <template>
-  <section class="hero is-primary has-text-centered">
-    <div class="hero-body">
-      <p class="title">Cadastro de Pessoa</p>
-      <p class="subtitle">Preencha o formulário abaixo.</p>
+  <div>
+    <section class="hero is-primary has-text-centered">
+      <div class="hero-body">
+        <p class="title">Cadastro de Pessoa</p>
+        <p class="subtitle">Preencha o formulário abaixo.</p>
+      </div>
+    </section>
+    <div class="container is-max-desktop person">
+      <PersonRegister />
     </div>
-  </section>
-  <div class="container is-max-desktop person">
-    <PersonRegister />
   </div>
 </template>
 
@@ -19,7 +21,6 @@
     props: {
       id: Number,
     },
-    name: 'Person',
   })
 </script>
 

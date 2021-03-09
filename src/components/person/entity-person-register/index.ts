@@ -1,0 +1,1 @@
+export { default as EntityPersonRegister } from './entity-person-register.vue'

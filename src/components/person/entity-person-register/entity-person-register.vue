@@ -1,7 +1,7 @@
 <template>
-  <div class="individual-person-register">
+  <div class="entity-person-register">
     <form>
-      <IndividualForm
+      <EntityForm
         v-if="currentStep === 0"
         :isFirstStep="isFirstStep"
         :isLastStep="isLastStep"
@@ -22,16 +22,14 @@
 </template>
 <script lang="ts">
   import { useStore } from 'vuex'
-  import { defineComponent, SetupContext } from 'vue'
+  import { defineComponent } from 'vue'
   import { Addresses } from '../addresses'
-  import { FormSteps } from '../form-steps'
-  import { IndividualForm } from '../individual-form'
+  import { EntityForm } from '../entity-form'
 
   export default defineComponent({
     components: {
-      FormSteps,
       Addresses,
-      IndividualForm,
+      EntityForm,
     },
     props: {
       isFirstStep: Boolean,
@@ -42,7 +40,7 @@
         default: 0,
       },
     },
-    setup(_props, context: SetupContext) {
+    setup(_props, context) {
       const store = useStore()
 
       const onChangeStep = (step: number) => {
@@ -61,7 +59,7 @@
   })
 </script>
 <style lang="scss">
-  .individual-person-register {
+  .entity-person-register {
     form {
       width: $form-width;
       max-width: 100%;

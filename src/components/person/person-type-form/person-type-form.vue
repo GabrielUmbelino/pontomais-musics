@@ -35,7 +35,6 @@
   import { defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'person-type-form',
     props: {
       personType: String,
     },

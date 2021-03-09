@@ -201,7 +201,6 @@
 
   export default defineComponent({
     directives: { mask },
-    name: 'address-form',
     props: {
       zipcode: Object as () => Validation,
       address: Object as () => Validation,

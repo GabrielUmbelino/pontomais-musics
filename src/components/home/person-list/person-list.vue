@@ -21,8 +21,11 @@
       <tbody>
         <tr v-for="person in personList" :key="person._id">
           <td>{{ person.name }}</td>
-          <!-- <td>{{ person.type === 'individual' ? 'Pessoa Física' : 'Pessoa Jurídica' }}</td> -->
-          <td class="is-desktop">{{ person.type }}</td>
+          <td class="is-desktop">
+            {{
+              person.type === 'individual' ? 'Pessoa Física' : 'Pessoa Jurídica'
+            }}
+          </td>
           <td class="is-desktop">
             {{ person.cpf ? person.cpf : person.cnpj }}
           </td>

@@ -26,7 +26,7 @@ export const actions = {
     try {
       // get artists ids from term
       const response = await this.$axios.$get(
-        `/api/search?term=${term}&entity=musicArtist&limit=5`
+        `/search?term=${term}&entity=musicArtist&limit=5`
       );
 
       // stop searching if there is no results
@@ -45,7 +45,7 @@ export const actions = {
   },
   async getAlbums({ commit }, artistsIds) {
     const response = await this.$axios.$get(
-      `/api/lookup?id=${artistsIds}&entity=album&limit=100`
+      `/lookup?id=${artistsIds}&entity=album&limit=100`
     );
     // filter only collection types
     const albums = response.results.filter(
@@ -59,7 +59,7 @@ export const actions = {
     commit("START_LOADING");
     try {
       const response = await this.$axios.$get(
-        `/api/lookup?id=${state.album.collectionId}&entity=song&limit=100`
+        `/lookup?id=${state.album.collectionId}&entity=song&limit=100`
       );
       const songs = response.results.filter(
         song => song.wrapperType == "track"

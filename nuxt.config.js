@@ -60,6 +60,9 @@ export default {
       }
     }
   },
+  axios: {
+    baseURL: 'https://itunes.apple.com/', // Used as fallback if no runtime config is provided
+  },
   /*
    ** Build configuration
    */
